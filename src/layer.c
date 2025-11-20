@@ -1,16 +1,18 @@
 #include "layer.h"
 
-Layer *CreateLayer(const unsigned char width, const unsigned char height)
+Layer *CreateLayer(const unsigned int width, const unsigned int height)
 {
-    Layer *layer = calloc(0, sizeof(Layer));
+    Layer *layer = malloc(sizeof(Layer));
     if (!layer)
         return NULL;
-    layer->buffer = calloc(0, sizeof(Color) * width * height);
+
+    layer->buffer = calloc(width * height, sizeof(Color));
     if (!layer->buffer)
     {
         free(layer);
         return NULL;
     }
+    
     layer->height = height;
     layer->width = width;
     return layer;
@@ -19,7 +21,7 @@ Layer *CreateLayer(const unsigned char width, const unsigned char height)
 void FreeLayer(Layer *layer)
 {
     if (!layer)
-        return NULL;
+        return;
     free(layer->buffer);
     free(layer);
 }

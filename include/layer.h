@@ -11,7 +11,7 @@ typedef struct
     Color *buffer;
 } Layer;
 
-Layer *CreateLayer(const unsigned char width, const unsigned char height);
+Layer *CreateLayer(const unsigned int width, const unsigned int height);
 void FreeLayer(Layer *layer);
 
 #endif

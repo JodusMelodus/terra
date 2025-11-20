@@ -5,8 +5,12 @@
 
 typedef struct
 {
+    unsigned int width, height;
     unsigned char layerCount;
-    Layer *layers;
+    Layer **layers;
 } ScreenBuffer;
+
+ScreenBuffer *CreateScreenBuffer(const unsigned int width, const unsigned int height);
+void FreeScreenBuffer(ScreenBuffer *screen);
 
 #endif
