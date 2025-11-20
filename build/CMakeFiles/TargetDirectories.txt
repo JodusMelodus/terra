@@ -1,0 +1,3 @@
+C:/Users/Philip/Documents/Documents/programming/projects/c/terra/build/CMakeFiles/terra.dir
+C:/Users/Philip/Documents/Documents/programming/projects/c/terra/build/CMakeFiles/ALL_BUILD.dir
+C:/Users/Philip/Documents/Documents/programming/projects/c/terra/build/CMakeFiles/ZERO_CHECK.dir
