@@ -22,10 +22,22 @@ int main()
 
     Texture2D texture = LoadTextureFromImage(image);
 
+    unsigned int x = 0;
+    unsigned int y = 0;
+
     while (!WindowShouldClose())
     {
-        LoadLayerTextureFromFile(screen->layers[BackgroundLayer], 0, 0, "../../textures/test.png");
-        LoadLayerTextureFromFile(screen->layers[BackgroundLayer], 50, 50, "../../textures/test.png");
+        if (IsKeyDown(KEY_A))
+            x -= 1;
+        if (IsKeyDown(KEY_D))
+            x += 1;
+        if (IsKeyDown(KEY_W))
+            y -= 1;
+        if (IsKeyDown(KEY_S))
+            y += 1;
+
+        LoadLayerTextureFromFile(screen->layers[BackgroundLayer], x, y, "../../textures/test.png");
+        // LoadLayerTextureFromFile(screen->layers[BackgroundLayer], x + 50, y + 50, "../../textures/test.png");
 
         UpdateTexture(texture, screen->layers[BackgroundLayer]->buffer);
         BeginDrawing();
