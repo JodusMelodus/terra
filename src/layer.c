@@ -50,7 +50,7 @@ int LoadLayerTextureFromFile(Layer *layer, const unsigned int x, const unsigned 
             unsigned char a = (channels > 3) ? textureData[index + 3] : 255;
 
             Color color = {r, g, b, a};
-            layer->buffer[(dy + y - (height / 2)) * layer->width + (dx + x - (width / 2))] = color;
+            layer->buffer[(dy + y) * layer->width + (dx + x)] = color;
         }
     }
 
@@ -72,7 +72,7 @@ int DrawLayerEntity(Layer *layer, Entity *entity)
         return 1;
     }
 
-    return LoadLayerTextureFromFile(layer, entity->x, entity->y, entity->texture);
+    return LoadLayerTextureFromFile(layer, entity->x - entity->width / 2, entity->y - entity->height / 2, entity->texture);
 }
 
 int FillLayer(Layer *layer, Color color)

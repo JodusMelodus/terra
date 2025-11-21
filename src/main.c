@@ -57,7 +57,7 @@ int main()
                 player->yVelocity = 0;
         }
 
-        LoadLayerTextureFromFile(screen->layers[BackgroundLayer], 850, 475, "../../textures/background.png");
+        LoadLayerTextureFromFile(screen->layers[BackgroundLayer], 0, 0, "../../textures/background.png");
 
         Color c = {0, 0, 0, 0};
         FillLayer(screen->layers[MidgroundLayer], c);
