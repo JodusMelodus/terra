@@ -13,8 +13,7 @@ int main()
     SetTargetFPS(60);
 
     ScreenBuffer *screen = CreateScreenBuffer(width, height);
-    Entity *player = CreateEntity("Player", 25, 25, "../../textures/test.png");
-
+    Entity *player = CreateEntity("Player", 50, 50, "../../textures/test.png", 50, 50);
     Image image = {
         .data = screen->layers[BackgroundLayer]->buffer,
         .width = width,
@@ -31,23 +30,26 @@ int main()
         deltaTime = GetFrameTime();
 
         if (IsKeyDown(KEY_A))
-            player->xVelocity = -100;
+            player->xVelocity = -200;
         else if (IsKeyDown(KEY_D))
-            player->xVelocity = 100;
+            player->xVelocity = 200;
         else
             player->xVelocity = 0;
 
-        if (IsKeyDown(KEY_W))
-            player->yVelocity = -100;
-        else if (IsKeyDown(KEY_S))
-            player->yVelocity = 100;
-        else
-            player->yVelocity = 0;
+        player->yVelocity += 980.0f * deltaTime;
+
+        if (IsKeyDown(KEY_SPACE) && EntityOnGround(player))
+            player->yVelocity = -500;
+
+        if (player->y >= 900.0f)
+        {
+            player->y = 900.0f;
+            if (player->yVelocity > 0)
+                player->yVelocity = 0;
+        }
 
         FillLayer(screen->layers[BackgroundLayer], BLACK);
         DrawLayerEntity(screen->layers[BackgroundLayer], player);
-
-        printf("Player coords: (%.2f, %.2f)\n", player->x, player->y);
 
         UpdateEntity(player, deltaTime);
 
