@@ -39,22 +39,22 @@ int main()
         deltaTime = GetFrameTime();
 
         if (IsKeyDown(KEY_A))
-            player->xVelocity = -200;
+            player->velocity.x = -200;
         else if (IsKeyDown(KEY_D))
-            player->xVelocity = 200;
+            player->velocity.x = 200;
         else
-            player->xVelocity = 0;
+            player->velocity.x = 0;
 
-        player->yVelocity += 980.0f * deltaTime;
+        player->velocity.y += 980.0f * deltaTime;
 
         if (IsKeyDown(KEY_SPACE) && EntityOnGround(player))
-            player->yVelocity = -500;
+            player->velocity.y = -500;
 
         if (player->y >= 900.0f)
         {
             player->y = 900.0f;
-            if (player->yVelocity > 0)
-                player->yVelocity = 0;
+            if (player->velocity.y > 0)
+                player->velocity.y = 0;
         }
 
         LoadLayerTextureFromFile(screen->layers[BackgroundLayer], 0, 0, "../../textures/background.png");

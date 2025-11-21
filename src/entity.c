@@ -21,14 +21,15 @@ Entity *CreateEntity(const char *name, int x, int y, const char *texture, int wi
         return NULL;
     }
 
+    Vector2 velocity = {.x = 0, .y = 0};
+
     entity->name = name;
     entity->texture = texture;
     entity->width = width;
     entity->height = height;
     entity->x = x;
     entity->y = y;
-    entity->xVelocity = 0;
-    entity->yVelocity = 0;
+    entity->velocity = velocity;
     return entity;
 }
 
@@ -45,6 +46,6 @@ int EntityOnGround(Entity *entity)
 
 void UpdateEntity(Entity *entity, float deltaTime)
 {
-    entity->x += round(entity->xVelocity * deltaTime);
-    entity->y += round(entity->yVelocity * deltaTime);
+    entity->x += round(entity->velocity.x * deltaTime);
+    entity->y += round(entity->velocity.y * deltaTime);
 }
