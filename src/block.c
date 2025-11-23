@@ -13,7 +13,7 @@ BlockRegistry *CreateBlockRegistry()
     return blockRegistry;
 }
 
-int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition *blockDefinition)
+int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition blockDefinition)
 {
     if (!blockRegistry)
     {
@@ -21,12 +21,27 @@ int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition *blockDefinition
         return 1;
     }
 
-    if (!blockDefinition)
+    blockRegistry->registry[blockRegistry->blockCount] = blockDefinition;
+    return 0;
+}
+
+int InitializeBlockRegistry(BlockRegistry *blockRegistry)
+{
+    if (!blockRegistry)
     {
-        printf("RegisterBlock: Invalid block definition pointer");
-        return 1;
+        printf("InitializeBlockRegistry: Invalid block registry pointer\n");
+        return NULL;
     }
 
-    blockRegistry->registry[blockRegistry->blockCount] = blockDefinition;
+    RegisterBlock(blockRegistry, (BlockDefinition){
+                                     .name = "Dirt",
+                                     .isSolid = 1,
+                                     .textureIndex = 0});
+
+    RegisterBlock(blockRegistry, (BlockDefinition){
+                                     .name = "Grass",
+                                     .isSolid = 1,
+                                     .textureIndex = 1});
+
     return 0;
 }

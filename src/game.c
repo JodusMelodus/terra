@@ -26,5 +26,7 @@ Game *CreateGame()
     game->screen = screen;
     game->blockRegistry = blockRegistry;
 
+    InitializeBlockRegistry(game->blockRegistry);
+
     return game;
 }

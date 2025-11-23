@@ -6,7 +6,6 @@
 
 typedef enum
 {
-    BI_Air,
     BI_Dirt,
     BI_Grass
 } BlockID;
@@ -23,11 +22,12 @@ typedef struct
 
 typedef struct
 {
-    BlockDefinition* registry[256];
+    BlockDefinition registry[256];
     unsigned char blockCount;
 } BlockRegistry;
 
 BlockRegistry *CreateBlockRegistry();
-int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition *blockDefinition);
+int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition blockDefinition);
+int InitializeBlockRegistry(BlockRegistry *blockRegistry);
 
 #endif
