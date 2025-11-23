@@ -2,8 +2,8 @@
 #define LAYER_H
 
 #include <stdlib.h>
-#include "raylib.h"
-#include "stb_image.h"
+#include <raylib.h>
+#include <stb_image.h>
 
 #include "types.h"
 #include "entity.h"

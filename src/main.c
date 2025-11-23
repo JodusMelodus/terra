@@ -1,6 +1,6 @@
 #include <stdio.h>
+#include <raylib.h>
 
-#include "raylib.h"
 #include "screen.h"
 #include "entity.h"
 
