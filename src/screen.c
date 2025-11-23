@@ -16,4 +16,9 @@ void FreeScreenBuffer(ScreenBuffer *screen)
     if (!screen)
         return;
     stbi_image_free(screen->tileMap.textureData);
+
+    for (size_t i = 0; i < 3; i++)
+    {
+        FreeLayer(&screen->layers[i]);
+    }
 }

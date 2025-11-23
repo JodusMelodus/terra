@@ -18,7 +18,7 @@ typedef struct
     Texture2D textures[3];
 } Game;
 
-Game CreateGame();
+Game *CreateGame();
 int RunGame(Game *game);
 int DrawWorld(Game *game);
 void FinishGame(Game *game);

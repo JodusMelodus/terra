@@ -7,6 +7,7 @@
 
 typedef enum
 {
+    BI_Air,
     BI_Dirt,
     BI_Grass
 } BlockID;

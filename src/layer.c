@@ -2,7 +2,14 @@
 
 Layer CreateLayer()
 {
-    return (Layer){.buffer = {0}};
+    Layer layer;
+    layer.buffer = malloc(SCREEN_PIXEL_WIDTH * SCREEN_PIXEL_HEIGHT * sizeof(Color));
+    if (!layer.buffer)
+    {
+        perror("Failed to allocate memory for layer buffer");
+        exit(1);
+    }
+    return layer;
 }
 
 int LoadLayerTextureFromFile(Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath)
@@ -116,4 +123,13 @@ int DrawLayerBlock(Layer *layer, TextureMap tileMap, const unsigned int x, const
     }
 
     return 0;
+}
+
+void FreeLayer(Layer *layer)
+{
+    if (layer && layer->buffer)
+    {
+        free(layer->buffer);
+        layer->buffer = NULL;
+    }
 }

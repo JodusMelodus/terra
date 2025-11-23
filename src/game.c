@@ -1,40 +1,52 @@
 #include "game.h"
 
-Game CreateGame()
+Game *CreateGame()
 {
-    Game game = {
-        .screen = CreateScreenBuffer(),
-        .blockRegistry = CreateBlockRegistry(),
-        .player = CreateEntity("Player", 50, 50, "../../textures/test.png", 50, 50),
-        .world = {0},
-        .textures = {0}};
+    Game *game = malloc(sizeof(Game));
+    if (!game)
+    {
+        perror("Failed to allocate memory for game");
+        return NULL;
+    }
 
-    InitializeBlockRegistry(&game.blockRegistry);
+    ScreenBuffer screen = CreateScreenBuffer();
+    BlockRegistry blockregistry = CreateBlockRegistry();
+    Entity player = CreateEntity("Player", 50, 50, "../../textures/test.png", 50, 50);
 
-    game.world[0][0] = BI_Grass;
+    game->screen = screen;
+    game->blockRegistry = blockregistry;
+    game->player = player;
+
+    InitializeBlockRegistry(&game->blockRegistry);
+
+    for (size_t y = 0; y < SCREEN_BLOCK_HEIGHT; y++)
+        for (size_t x = 0; x < SCREEN_BLOCK_WIDTH; x++)
+            game->world[y][x] = BI_Air;
+
+    game->world[0][0] = BI_Grass;
 
     InitWindow(SCREEN_PIXEL_WIDTH, SCREEN_PIXEL_HEIGHT, "Terra");
 
     Image backgroundImage = {
-        .data = game.screen.layers[BackgroundLayer].buffer,
+        .data = game->screen.layers[BackgroundLayer].buffer,
         .width = SCREEN_PIXEL_WIDTH,
         .height = SCREEN_PIXEL_HEIGHT,
         .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
         .mipmaps = 1};
 
-    game.textures[BackgroundLayer] = LoadTextureFromImage(backgroundImage);
+    game->textures[BackgroundLayer] = LoadTextureFromImage(backgroundImage);
 
-    LoadLayerTextureFromFile(&game.screen.layers[BackgroundLayer], 0, 0, "../../textures/background.png");
-    UpdateTexture(game.textures[BackgroundLayer], game.screen.layers[BackgroundLayer].buffer);
+    LoadLayerTextureFromFile(&game->screen.layers[BackgroundLayer], 0, 0, "../../textures/background.png");
+    UpdateTexture(game->textures[BackgroundLayer], game->screen.layers[BackgroundLayer].buffer);
 
     Image midgroundImage = {
-        .data = game.screen.layers[MidgroundLayer].buffer,
+        .data = game->screen.layers[MidgroundLayer].buffer,
         .width = SCREEN_PIXEL_WIDTH,
         .height = SCREEN_PIXEL_HEIGHT,
         .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
         .mipmaps = 1};
 
-    game.textures[MidgroundLayer] = LoadTextureFromImage(midgroundImage);
+    game->textures[MidgroundLayer] = LoadTextureFromImage(midgroundImage);
 
     return game;
 }
