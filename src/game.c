@@ -9,7 +9,7 @@ Game *CreateGame()
         return NULL;
     }
 
-    ScreenBuffer *screen = CreateScreenBuffer(SCREEN_WIDTH, SCREEN_HEIGHT);
+    ScreenBuffer *screen = CreateScreenBuffer(SCREEN_PIXEL_WIDTH, SCREEN_PIXEL_HEIGHT);
     if (!screen)
     {
         printf("CreateGame: Failed to create screen\n");
@@ -36,12 +36,14 @@ Game *CreateGame()
 
     InitializeBlockRegistry(game->blockRegistry);
 
-    InitWindow(SCREEN_WIDTH, SCREEN_HEIGHT, "Terra");
+    game->world[0][0] = BI_Grass;
+
+    InitWindow(SCREEN_PIXEL_WIDTH, SCREEN_PIXEL_HEIGHT, "Terra");
 
     Image backgroundImage = {
         .data = game->screen->layers[BackgroundLayer]->buffer,
-        .width = SCREEN_WIDTH,
-        .height = SCREEN_HEIGHT,
+        .width = SCREEN_PIXEL_WIDTH,
+        .height = SCREEN_PIXEL_HEIGHT,
         .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
         .mipmaps = 1};
 
@@ -52,8 +54,8 @@ Game *CreateGame()
 
     Image midgroundImage = {
         .data = game->screen->layers[MidgroundLayer]->buffer,
-        .width = SCREEN_WIDTH,
-        .height = SCREEN_HEIGHT,
+        .width = SCREEN_PIXEL_WIDTH,
+        .height = SCREEN_PIXEL_HEIGHT,
         .format = PIXELFORMAT_UNCOMPRESSED_R8G8B8A8,
         .mipmaps = 1};
 
@@ -96,16 +98,37 @@ int RunGame(Game *game)
                 game->player->velocity.y = 0;
         }
 
-        FillLayer(game->screen->layers[MidgroundLayer], (Color){0, 0, 0, 0});
+        FillLayer(game->screen->layers[MidgroundLayer], BLANK);
         UpdateEntity(game->player, deltaTime);
         DrawLayerEntity(game->screen->layers[MidgroundLayer], game->player);
-        UpdateTexture(game->textures[MidgroundLayer], game->screen->layers[MidgroundLayer]->buffer);
 
+        UpdateTexture(game->textures[MidgroundLayer], game->screen->layers[MidgroundLayer]->buffer);
         BeginDrawing();
         ClearBackground(BLACK);
         DrawTexture(game->textures[BackgroundLayer], 0, 0, WHITE);
         DrawTexture(game->textures[MidgroundLayer], 0, 0, WHITE);
         EndDrawing();
+    }
+
+    return 0;
+}
+
+int DrawWorld(Game *game)
+{
+    if (!game)
+    {
+        printf("DrawWorld: Invalid game pointer\n");
+        return 1;
+    }
+
+    for (size_t y = 0; y < SCREEN_BLOCK_HEIGHT; y++)
+    {
+        for (size_t x = 0; x < SCREEN_BLOCK_WIDTH; x++)
+        {
+            BlockID blockId = game->world[x][y];
+            BlockDefinition *blockDefinition = &game->blockRegistry->registry[blockId];
+            DrawLayerBlock(game->screen->layers[MidgroundLayer], x * 24, y * 24, blockDefinition);
+        }
     }
 
     return 0;

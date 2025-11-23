@@ -95,6 +95,25 @@ int FillLayer(Layer *layer, Color color)
     return 0;
 }
 
+int DrawLayerBlock(Layer *layer, const unsigned int x, const unsigned int y, BlockDefinition *blockDefinition)
+{
+    if (!layer)
+    {
+        printf("DrawLayerBlock: Invalid layer pointer\n");
+        return 1;
+    }
+
+    if (!blockDefinition)
+    {
+        printf("DrawLayerBlock: Invalid block definition pointer\n");
+        return 1;
+    }
+
+    // TODO interpret x and y to get texture from tilemap
+
+    return 0;
+}
+
 void FreeLayer(Layer *layer)
 {
     if (!layer)

@@ -21,7 +21,7 @@ int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition blockDefinition)
         return 1;
     }
 
-    blockRegistry->registry[blockRegistry->blockCount] = blockDefinition;
+    blockRegistry->registry[blockRegistry->blockCount++] = blockDefinition;
     return 0;
 }
 
@@ -34,14 +34,16 @@ int InitializeBlockRegistry(BlockRegistry *blockRegistry)
     }
 
     RegisterBlock(blockRegistry, (BlockDefinition){
-                                     .name = "Dirt",
+                                     .name = "Grass",
                                      .isSolid = 1,
                                      .textureIndex = 0});
 
     RegisterBlock(blockRegistry, (BlockDefinition){
-                                     .name = "Grass",
+                                     .name = "Dirt",
                                      .isSolid = 1,
                                      .textureIndex = 1});
+
+    
 
     return 0;
 }
