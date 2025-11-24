@@ -21,7 +21,7 @@ Game *CreateGame()
 
     for (int i = 0; i < SCREEN_BLOCK_HEIGHT; i++)
     {
-        game->world[i][i] = BI_Grass;
+        game->world[19][i] = BI_Grass;
     }
 
     InitWindow(SCREEN_PIXEL_WIDTH, SCREEN_PIXEL_HEIGHT, "Terra");
