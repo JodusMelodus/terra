@@ -3,11 +3,13 @@
 
 #include <stdlib.h>
 #include <stdio.h>
+#include <math.h>
 
 #include "screen.h"
 #include "block.h"
 #include "types.h"
 #include "entity.h"
+#include "utils.h"
 
 typedef struct
 {
@@ -19,6 +21,7 @@ typedef struct
 } Game;
 
 Game *CreateGame();
+int GenerateWorld(Game *game, unsigned int seed);
 int RunGame(Game *game);
 int DrawWorld(Game *game);
 void FinishGame(Game *game);

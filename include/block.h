@@ -9,7 +9,8 @@ typedef enum
 {
     BI_Air,
     BI_Dirt,
-    BI_Grass
+    BI_Grass,
+    BI_Stone,
 } BlockID;
 
 typedef struct

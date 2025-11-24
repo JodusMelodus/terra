@@ -19,11 +19,6 @@ Game *CreateGame()
         for (size_t x = 0; x < SCREEN_BLOCK_WIDTH; x++)
             game->world[y][x] = BI_Air;
 
-    for (int i = 0; i < SCREEN_BLOCK_HEIGHT; i++)
-    {
-        game->world[19][i] = BI_Grass;
-    }
-
     InitWindow(SCREEN_PIXEL_WIDTH, SCREEN_PIXEL_HEIGHT, "Terra");
 
     Image backgroundImage = {
@@ -48,6 +43,27 @@ Game *CreateGame()
     game->textures[MidgroundLayer] = LoadTextureFromImage(midgroundImage);
 
     return game;
+}
+
+int GenerateWorld(Game *game, unsigned int seed)
+{
+    noiseSeed(seed);
+
+    for (int x = 0; x < SCREEN_BLOCK_WIDTH; x++)
+    {
+        float y = noiseGet(x / 10.0);
+        int height = y * SCREEN_BLOCK_HEIGHT + SCREEN_BLOCK_HEIGHT / 2;
+        game->world[height][x] = BI_Grass;
+        for (int j = height + 1; j < SCREEN_BLOCK_HEIGHT; j++)
+        {
+            if (j - height > 3)
+                game->world[j][x] = BI_Stone;
+            else
+                game->world[j][x] = BI_Dirt;
+        }
+    }
+
+    return 0;
 }
 
 int RunGame(Game *game)

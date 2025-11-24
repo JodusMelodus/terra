@@ -27,9 +27,10 @@ int InitializeBlockRegistry(BlockRegistry *blockRegistry)
         return 1;
     }
 
-    RegisterBlock(blockRegistry, (BlockDefinition){.name = "Air", .isSolid = 0, .textureIndex = (Vector2){2, 0}, .onBreak = NULL, .onPlace = NULL});
+    RegisterBlock(blockRegistry, (BlockDefinition){.name = "Air", .isSolid = 0, .textureIndex = (Vector2){3, 0}, .onBreak = NULL, .onPlace = NULL});
     RegisterBlock(blockRegistry, (BlockDefinition){.name = "Dirt", .isSolid = 1, .textureIndex = (Vector2){1, 0}, .onBreak = NULL, .onPlace = NULL});
     RegisterBlock(blockRegistry, (BlockDefinition){.name = "Grass", .isSolid = 1, .textureIndex = (Vector2){0, 0}, .onBreak = NULL, .onPlace = NULL});
+    RegisterBlock(blockRegistry, (BlockDefinition){.name = "Stone", .isSolid = 1, .textureIndex = (Vector2){2, 0}, .onBreak = NULL, .onPlace = NULL});
 
     return 0;
 }
