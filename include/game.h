@@ -14,23 +14,23 @@
 static float deltaTime = 0;
 static int groundLevel = GROUND_LEVEL;
 static Vector2 mousePosition;
-static BlockDefinition surroundingBlocks[4];
+static struct BlockDefinition surroundingBlocks[4];
 
-typedef struct
+struct Game
 {
-    ScreenBuffer screen;
-    BlockRegistry blockRegistry;
-    Entity player;
-    BlockID world[SCREEN_BLOCK_HEIGHT][SCREEN_BLOCK_WIDTH];
+    struct ScreenBuffer screen;
+    struct BlockRegistry blockRegistry;
+    struct Entity player;
+    enum BlockID world[SCREEN_BLOCK_HEIGHT][SCREEN_BLOCK_WIDTH];
     Texture2D textures[3];
-} Game;
+};
 
-Game *CreateGame();
-int GenerateWorld(Game *game, unsigned int seed);
-int RunGame(Game *game);
-void HandlePlayerMovement(Game *game);
-int DrawWorld(Game *game);
-void RedrawGame(Game *game);
-void FinishGame(Game *game);
+struct Game *CreateGame();
+int GenerateWorld(struct Game *game, unsigned int seed);
+int RunGame(struct Game *game);
+void HandlePlayerMovement(struct Game *game);
+int DrawWorld(struct Game *game);
+void RedrawGame(struct Game *game);
+void FinishGame(struct Game *game);
 
 #endif

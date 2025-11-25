@@ -7,11 +7,6 @@ void noiseSeed(unsigned int seed)
     noise[2] = (float)(seed % 8) / 5.32;
     noise[3] = (float)(seed % 2) / 5.75;
     noise[4] = (float)(seed % 9) / 6.54;
-
-    for (int i = 0; i < 5; i++)
-    {
-        printf("%f\n", noise[i]);
-    }
 }
 
 float sigmoid(float x)

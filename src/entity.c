@@ -1,6 +1,6 @@
 #include "entity.h"
 
-Entity CreateEntity(const char *name, int x, int y, const char *texture)
+struct Entity CreateEntity(const char *name, int x, int y, const char *texture)
 {
     if (!name)
     {
@@ -14,7 +14,7 @@ Entity CreateEntity(const char *name, int x, int y, const char *texture)
         exit(1);
     }
 
-    return (Entity){
+    return (struct Entity){
         .name = name,
         .texture = texture,
         .velocity = {0, 0},
@@ -22,7 +22,7 @@ Entity CreateEntity(const char *name, int x, int y, const char *texture)
         .y = y};
 }
 
-int EntityOnGround(Entity *entity)
+int EntityOnGround(struct Entity *entity)
 {
     if (!entity)
     {
@@ -33,7 +33,7 @@ int EntityOnGround(Entity *entity)
     return entity->y >= GROUND_LEVEL;
 }
 
-void UpdateEntity(Entity *entity, float deltaTime)
+void UpdateEntity(struct Entity *entity, float deltaTime)
 {
     entity->x += round(entity->velocity.x * deltaTime);
     entity->y += round(entity->velocity.y * deltaTime);

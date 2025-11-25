@@ -8,16 +8,16 @@
 
 #include "types.h"
 
-typedef struct
+struct Entity
 {
     const char *name;
     const char *texture;
     int x, y;
     Vector2 velocity;
-} Entity;
+};
 
-Entity CreateEntity(const char *name, int x, int y, const char *texture);
-int EntityOnGround(Entity *entity);
-void UpdateEntity(Entity *entity, float deltaTime);
+struct Entity CreateEntity(const char *name, int x, int y, const char *texture);
+int EntityOnGround(struct Entity *entity);
+void UpdateEntity(struct Entity *entity, float deltaTime);
 
 #endif

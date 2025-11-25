@@ -1,8 +1,8 @@
 #include "game.h"
 
-Game *CreateGame()
+struct Game *CreateGame()
 {
-    Game *game = malloc(sizeof(Game));
+    struct Game *game = malloc(sizeof(struct Game));
     if (!game)
     {
         perror("Failed to allocate memory for game");
@@ -54,7 +54,7 @@ Game *CreateGame()
     return game;
 }
 
-int GenerateWorld(Game *game, unsigned int seed)
+int GenerateWorld(struct Game *game, unsigned int seed)
 {
     noiseSeed(seed);
 
@@ -75,7 +75,7 @@ int GenerateWorld(Game *game, unsigned int seed)
     return 0;
 }
 
-int RunGame(Game *game)
+int RunGame(struct Game *game)
 {
     if (!game)
     {
@@ -97,7 +97,7 @@ int RunGame(Game *game)
     return 0;
 }
 
-void HandlePlayerMovement(Game *game)
+void HandlePlayerMovement(struct Game *game)
 {
     int x = game->player.x / BLOCK_SIZE;
     int y = game->player.y / BLOCK_SIZE;
@@ -144,7 +144,7 @@ void HandlePlayerMovement(Game *game)
     game->player.y += game->player.velocity.y * deltaTime;
 }
 
-int DrawWorld(Game *game)
+int DrawWorld(struct Game *game)
 {
     if (!game)
     {
@@ -156,8 +156,8 @@ int DrawWorld(Game *game)
     {
         for (size_t x = 0; x < SCREEN_BLOCK_WIDTH; x++)
         {
-            BlockID blockId = game->world[y][x];
-            BlockDefinition *blockDefinition = &game->blockRegistry.registry[blockId];
+            enum BlockID blockId = game->world[y][x];
+            struct BlockDefinition *blockDefinition = &game->blockRegistry.registry[blockId];
             DrawLayerBlock(&game->screen.layers[MidgroundLayer], game->screen.tileMap, x * BLOCK_SIZE, y * BLOCK_SIZE, blockDefinition);
         }
     }
@@ -165,7 +165,7 @@ int DrawWorld(Game *game)
     return 0;
 }
 
-void RedrawGame(Game *game)
+void RedrawGame(struct Game *game)
 {
     FillLayer(&game->screen.layers[MidgroundLayer], BLANK);
     FillLayer(&game->screen.layers[ForegroundLayer], BLANK);
@@ -188,7 +188,7 @@ void RedrawGame(Game *game)
     EndDrawing();
 }
 
-void FinishGame(Game *game)
+void FinishGame(struct Game *game)
 {
     if (!game)
     {

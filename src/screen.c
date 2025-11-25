@@ -1,8 +1,8 @@
 #include "screen.h"
 
-ScreenBuffer CreateScreenBuffer()
+struct ScreenBuffer CreateScreenBuffer()
 {
-    ScreenBuffer screen;
+    struct ScreenBuffer screen;
 
     for (size_t i = 0; i < 3; i++)
         screen.layers[i] = CreateLayer();
@@ -11,7 +11,7 @@ ScreenBuffer CreateScreenBuffer()
     return screen;
 }
 
-void FreeScreenBuffer(ScreenBuffer *screen)
+void FreeScreenBuffer(struct ScreenBuffer *screen)
 {
     if (!screen)
         return;

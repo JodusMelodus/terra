@@ -1,6 +1,6 @@
 #include "types.h"
 
-TextureMap CreateTextureMap(const char *path)
+struct TextureMap CreateTextureMap(const char *path)
 {
     int width, height, channels;
     unsigned char *textureData = stbi_load(path, &width, &height, &channels, 0);
@@ -10,14 +10,14 @@ TextureMap CreateTextureMap(const char *path)
         exit(1);
     }
 
-    return (TextureMap){
+    return (struct TextureMap){
         .width = width,
         .height = height,
         .channels = channels,
         .textureData = textureData};
 }
 
-void FreeTextureMap(TextureMap *textureMap)
+void FreeTextureMap(struct TextureMap *textureMap)
 {
     stbi_image_free(textureMap->textureData);
 }

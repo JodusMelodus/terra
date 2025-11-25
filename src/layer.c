@@ -1,8 +1,8 @@
 #include "layer.h"
 
-Layer CreateLayer()
+struct Layer CreateLayer()
 {
-    Layer layer;
+    struct Layer layer;
     layer.buffer = malloc(SCREEN_PIXEL_WIDTH * SCREEN_PIXEL_HEIGHT * sizeof(Color));
     if (!layer.buffer)
     {
@@ -12,7 +12,7 @@ Layer CreateLayer()
     return layer;
 }
 
-int LoadLayerTextureFromFile(Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath)
+int LoadLayerTextureFromFile(struct Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath)
 {
     int width, height, channels;
     unsigned char *textureData = stbi_load(texturePath, &width, &height, &channels, 0);
@@ -50,7 +50,7 @@ int LoadLayerTextureFromFile(Layer *layer, const unsigned int x, const unsigned 
     return 0;
 }
 
-int DrawLayerEntity(Layer *layer, Entity *entity)
+int DrawLayerEntity(struct Layer *layer, struct Entity *entity)
 {
     if (!layer)
     {
@@ -67,7 +67,7 @@ int DrawLayerEntity(Layer *layer, Entity *entity)
     return LoadLayerTextureFromFile(layer, entity->x - BLOCK_SIZE / 2, entity->y - BLOCK_SIZE / 2, entity->texture);
 }
 
-int FillLayer(Layer *layer, Color color)
+int FillLayer(struct Layer *layer, Color color)
 {
     if (!layer)
     {
@@ -82,7 +82,7 @@ int FillLayer(Layer *layer, Color color)
     return 0;
 }
 
-int DrawLayerBlock(Layer *layer, TextureMap tileMap, const unsigned int x, const unsigned int y, BlockDefinition *blockDefinition)
+int DrawLayerBlock(struct Layer *layer, struct TextureMap tileMap, const unsigned int x, const unsigned int y, struct BlockDefinition *blockDefinition)
 {
     if (!layer)
     {
@@ -127,7 +127,7 @@ int DrawLayerBlock(Layer *layer, TextureMap tileMap, const unsigned int x, const
     return 0;
 }
 
-void FreeLayer(Layer *layer)
+void FreeLayer(struct Layer *layer)
 {
     if (layer && layer->buffer)
     {

@@ -4,13 +4,13 @@
 #include "layer.h"
 #include "types.h"
 
-typedef struct
+struct ScreenBuffer
 {
-    Layer layers[3];
-    TextureMap tileMap;
-} ScreenBuffer;
+    struct Layer layers[3];
+    struct TextureMap tileMap;
+};
 
-ScreenBuffer CreateScreenBuffer();
-void FreeScreenBuffer(ScreenBuffer *screen);
+struct ScreenBuffer CreateScreenBuffer();
+void FreeScreenBuffer(struct ScreenBuffer *screen);
 
 #endif

@@ -3,7 +3,7 @@
 
 int main()
 {
-    Game *game = CreateGame();
+    struct Game *game = CreateGame();
     GenerateWorld(game, 9999999999999999);
     RunGame(game);
     FinishGame(game);

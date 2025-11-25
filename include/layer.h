@@ -9,16 +9,16 @@
 #include "entity.h"
 #include "block.h"
 
-typedef struct
+struct Layer
 {
     Color *buffer;
-} Layer;
+};
 
-Layer CreateLayer();
-int LoadLayerTextureFromFile(Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath);
-int DrawLayerEntity(Layer *layer, Entity *entity);
-int FillLayer(Layer *layer, Color color);
-int DrawLayerBlock(Layer *layer, TextureMap tileMap, const unsigned int x, const unsigned int y, BlockDefinition *blockDefinition);
-void FreeLayer(Layer *layer);
+struct Layer CreateLayer();
+int LoadLayerTextureFromFile(struct Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath);
+int DrawLayerEntity(struct Layer *layer, struct Entity *entity);
+int FillLayer(struct Layer *layer, Color color);
+int DrawLayerBlock(struct Layer *layer, struct TextureMap tileMap, const unsigned int x, const unsigned int y, struct BlockDefinition *blockDefinition);
+void FreeLayer(struct Layer *layer);
 
 #endif

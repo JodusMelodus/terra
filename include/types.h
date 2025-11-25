@@ -11,28 +11,28 @@
 #define SCREEN_BLOCK_HEIGHT (SCREEN_PIXEL_HEIGHT / BLOCK_SIZE)
 #define GROUND_LEVEL (SCREEN_PIXEL_HEIGHT - BLOCK_SIZE)
 
-typedef enum
+enum Direction
 {
     Up,
     Down,
     Left,
     Right
-} Direction;
+};
 
-typedef enum
+enum LayerID
 {
     BackgroundLayer,
     ForegroundLayer,
     MidgroundLayer
-} LayerID;
+};
 
-typedef struct
+struct TextureMap
 {
     int width, height, channels;
     unsigned char *textureData;
-} TextureMap;
+};
 
-TextureMap CreateTextureMap(const char *path);
-void FreeTextureMap(TextureMap *textureMap);
+struct TextureMap CreateTextureMap(const char *path);
+void FreeTextureMap(struct TextureMap *textureMap);
 
 #endif

@@ -5,15 +5,15 @@
 #include <stdio.h>
 #include <raylib.h>
 
-typedef enum
+enum BlockID
 {
     BI_Air,
     BI_Dirt,
     BI_Grass,
     BI_Stone,
-} BlockID;
+};
 
-typedef struct
+struct BlockDefinition
 {
     const char *name;
     int isSolid;
@@ -21,16 +21,16 @@ typedef struct
 
     void (*onBreak)(void);
     void (*onPlace)(void);
-} BlockDefinition;
+};
 
-typedef struct
+struct BlockRegistry
 {
-    BlockDefinition registry[256];
+    struct BlockDefinition registry[256];
     unsigned char blockCount;
-} BlockRegistry;
+};
 
-BlockRegistry CreateBlockRegistry();
-int RegisterBlock(BlockRegistry *blockRegistry, BlockDefinition blockDefinition);
-int InitializeBlockRegistry(BlockRegistry *blockRegistry);
+struct BlockRegistry CreateBlockRegistry();
+int RegisterBlock(struct BlockRegistry *blockRegistry, struct BlockDefinition blockDefinition);
+int InitializeBlockRegistry(struct BlockRegistry *blockRegistry);
 
 #endif
