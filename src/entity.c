@@ -17,5 +17,8 @@ struct Entity CreateEntity(const char *name, const char *texture)
     return (struct Entity){
         .name = name,
         .texture = texture,
+        .position = (Vector2){SCREEN_PIXEL_WIDTH / 2.0f, GROUND_LEVEL},
+        .velocity = (Vector2){0, 0},
+        .grounded = 1,
     };
 }

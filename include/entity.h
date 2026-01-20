@@ -12,6 +12,9 @@ struct Entity
 {
     const char *name;
     const char *texture;
+    Vector2 position;
+    Vector2 velocity;
+    int grounded;
 };
 
 struct Entity CreateEntity(const char *name, const char *texture);

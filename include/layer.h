@@ -15,8 +15,8 @@ struct Layer
 };
 
 struct Layer CreateLayer();
-int LoadLayerTextureFromFile(struct Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath);
-int DrawLayerEntity(struct Layer *layer, struct Entity *entity);
+int LoadLayerTextureFromFile(struct Layer *layer, int x, int y, const char *texturePath);
+int DrawLayerEntity(struct Layer *layer, struct Entity *entity, Vector2 camera);
 int FillLayer(struct Layer *layer, Color color);
 int DrawLayerBlock(struct Layer *layer, struct TextureMap tileMap, const unsigned int x, const unsigned int y, struct BlockDefinition *blockDefinition);
 void FreeLayer(struct Layer *layer);

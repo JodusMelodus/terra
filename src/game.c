@@ -11,7 +11,7 @@ struct Game *CreateGame(unsigned int seed)
 
     game->screen = CreateScreenBuffer();
     game->blockRegistry = CreateBlockRegistry();
-    game->player = CreateEntity("Player", 50, 50, "../../textures/test.png");
+    game->player = CreateEntity("Player", "../../textures/test.png");
     game->camera = (Vector2){0, 0};
 
     InitializeBlockRegistry(&game->blockRegistry);
@@ -51,7 +51,7 @@ struct Game *CreateGame(unsigned int seed)
     return game;
 }
 
-enum BlockID GetWorldBlock(struct Game *game, int x)
+enum BlockID GetWorldBlock(struct Game *game, int height)
 {
 
     // TODO different blocks for given height
@@ -82,12 +82,40 @@ int RunGame(struct Game *game)
 
 void HandlePlayerMovement(struct Game *game)
 {
+    // Basic player movement + gravity
     if (IsKeyDown(KEY_A))
-        game->camera.x -= BLOCK_SIZE/8;
+        game->player.position.x -= 200.0f * deltaTime;
     if (IsKeyDown(KEY_D))
-        game->camera.x += BLOCK_SIZE/8;
-    if (IsKeyDown(KEY_SPACE))
-        game->camera.y -= BLOCK_SIZE;
+        game->player.position.x += 200.0f * deltaTime;
+
+    // Jump (only when grounded)
+    if (IsKeyPressed(KEY_SPACE) && game->player.grounded)
+    {
+        game->player.velocity.y = -800.0f; // upward impulse
+        game->player.grounded = 0;
+    }
+
+    // Apply gravity
+    game->player.velocity.y += GRAVITY * deltaTime;
+    game->player.position.y += game->player.velocity.y * deltaTime;
+
+    // Compute ground height under the player (world coordinates)
+    int playerBlockX = (int)(game->player.position.x / BLOCK_SIZE);
+    float terrain = noiseGet(playerBlockX * 0.05f);
+    int groundBlocks = (int)(terrain * (SCREEN_BLOCK_HEIGHT / 2)) + (SCREEN_BLOCK_HEIGHT / 4);
+    float groundY = groundBlocks * BLOCK_SIZE;
+
+    // Ground collision (use computed groundY)
+    if (game->player.position.y >= groundY)
+    {
+        game->player.position.y = groundY;
+        game->player.velocity.y = 0;
+        game->player.grounded = 1;
+    }
+
+    // Optional: camera follows player (centered)
+    game->camera.x = (int)(game->player.position.x - (SCREEN_PIXEL_WIDTH / 2));
+    game->camera.y = (int)(game->player.position.y - (SCREEN_PIXEL_HEIGHT / 2));
 }
 
 int DrawWorld(struct Game *game)
@@ -117,7 +145,7 @@ void RedrawGame(struct Game *game)
     FillLayer(&game->screen.layers[MidgroundLayer], BLANK);
     FillLayer(&game->screen.layers[ForegroundLayer], BLANK);
     DrawWorld(game);
-    DrawLayerEntity(&game->screen.layers[MidgroundLayer], &game->player);
+    DrawLayerEntity(&game->screen.layers[MidgroundLayer], &game->player, game->camera);
     LoadLayerTextureFromFile(
         &game->screen.layers[ForegroundLayer],
         (int)(mousePosition.x / BLOCK_SIZE) * BLOCK_SIZE,

@@ -12,7 +12,7 @@ struct Layer CreateLayer()
     return layer;
 }
 
-int LoadLayerTextureFromFile(struct Layer *layer, const unsigned int x, const unsigned int y, const char *texturePath)
+int LoadLayerTextureFromFile(struct Layer *layer, int x, int y, const char *texturePath)
 {
     int width, height, channels;
     unsigned char *textureData = stbi_load(texturePath, &width, &height, &channels, 0);
@@ -39,10 +39,13 @@ int LoadLayerTextureFromFile(struct Layer *layer, const unsigned int x, const un
             unsigned char b = (channels > 2) ? textureData[index + 2] : 0;
             unsigned char a = (channels > 3) ? textureData[index + 3] : 255;
 
-            int i = (dy + y) * SCREEN_PIXEL_WIDTH + (dx + x);
-
-            if (i > 0 && i < SCREEN_PIXEL_WIDTH * SCREEN_PIXEL_HEIGHT)
+            int py = dy + y;
+            int px = dx + x;
+            if (py >= 0 && py < SCREEN_PIXEL_HEIGHT && px >= 0 && px < SCREEN_PIXEL_WIDTH)
+            {
+                int i = py * SCREEN_PIXEL_WIDTH + px;
                 layer->buffer[i] = (Color){r, g, b, a};
+            }
         }
     }
 
@@ -50,7 +53,7 @@ int LoadLayerTextureFromFile(struct Layer *layer, const unsigned int x, const un
     return 0;
 }
 
-int DrawLayerEntity(struct Layer *layer, struct Entity *entity)
+int DrawLayerEntity(struct Layer *layer, struct Entity *entity, Vector2 camera)
 {
     if (!layer)
     {
@@ -64,7 +67,9 @@ int DrawLayerEntity(struct Layer *layer, struct Entity *entity)
         return 1;
     }
 
-    return LoadLayerTextureFromFile(layer, SCREEN_PIXEL_WIDTH / 2, SCREEN_PIXEL_HEIGHT / 2, entity->texture);
+    int drawX = (int)(entity->position.x - camera.x);
+    int drawY = (int)(entity->position.y - camera.y);
+    return LoadLayerTextureFromFile(layer, drawX, drawY, entity->texture);
 }
 
 int FillLayer(struct Layer *layer, Color color)

@@ -26,7 +26,7 @@ struct Game
 };
 
 struct Game *CreateGame(unsigned int seed);
-enum BlockID GetWorldBlock(struct Game *game, int x);
+enum BlockID GetWorldBlock(struct Game *game, int height);
 int RunGame(struct Game *game);
 void HandlePlayerMovement(struct Game *game);
 int DrawWorld(struct Game *game);
